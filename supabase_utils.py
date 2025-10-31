@@ -10,8 +10,11 @@ from datetime import date # Importado para safe_json_serialize
 def init_supabase() -> Client:
     """Inicializa e retorna o cliente Supabase usando os secrets do Streamlit."""
     try:
-        supabase_url = st.secrets["supabase_url"]
-        supabase_key = st.secrets["supabase_key"]
+        # --- MODIFICAÇÃO AQUI ---
+        supabase_url = st.secrets["supabase"]["supabase_url"]
+        supabase_key = st.secrets["supabase"]["supabase_key"]
+        # --- FIM DA MODIFICAÇÃO ---
+        
         return create_client(supabase_url, supabase_key)
     except Exception as e:
         st.error(f"Erro ao conectar com o Supabase: {e}")
