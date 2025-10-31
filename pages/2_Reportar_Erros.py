@@ -21,12 +21,16 @@ STATUS_OPTIONS = ['Aberto', 'Em Análise', 'Resolvido']
 @st.cache_resource
 def init_supabase_connection():
     try:
-        url = st.secrets["supabase_url"]
-        key = st.secrets["supabase_key"]
+        # --- AJUSTE AQUI ---
+        # Buscando dentro da seção [supabase] dos seus segredos
+        url = st.secrets["supabase"]["supabase_url"]
+        key = st.secrets["supabase"]["supabase_key"]
+        # --- FIM DO AJUSTE ---
+        
         return create_client(url, key)
     except Exception as e:
         st.error(f"Erro ao conectar com o Supabase: {e}")
-        st.info("Certifique-se de que 'supabase_url' e 'supabase_key' estão configurados nos seus Streamlit Secrets.")
+        st.info("Certifique-se de que 'supabase_url' e 'supabase_key' estão configurados nos seus Streamlit Secrets DENTRO de uma seção [supabase].")
         return None
 
 supabase = init_supabase_connection()
@@ -177,4 +181,4 @@ if supabase:
         st.info("Nenhum relatório de erro encontrado.")
 
 else:
-    st.error("A conexão com o banco de dados de relatórios falhou. Não é possível enviar")
+    st.error("A conexão com o banco de dados de relatórios falhou. Não é possível enviar ou carregar relatórios.")
